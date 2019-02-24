@@ -6,3 +6,8 @@ include(PreventInSourceBuilds)
 
 project(reg_utils)
 
+# Choose the sources depending of the target system
+if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+  add_subdirectory(rwreg/x86_64)
+endif()
+
