@@ -1,10 +1,11 @@
+find_package(wiscrpcsvc REQUIRED)
+
 add_library(rwreg SHARED
   src/rwreg.cc)
 
 target_include_directories(rwreg PRIVATE include)
 
-# TODO: use find_package
-target_link_libraries(rwreg PRIVATE /opt/wiscrpcsvc/lib/libwiscrpcsvc.so)
+target_link_libraries(rwreg PRIVATE wiscrpcsvc::wiscrpcsvc)
 
 install(TARGETS rwreg
   LIBRARY DESTINATION lib)
