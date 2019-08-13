@@ -101,7 +101,6 @@ def writeReg(reg, value):
     if 'w' not in reg.permission:
         return 'No write permission!'
     # Apply Mask if applicable
-    print "Initial value to write: %s, register %s"% (value,reg.name)
     if reg.mask is not None:
         shift_amount=0
         for bit in reversed('{0:b}'.format(reg.mask)):
