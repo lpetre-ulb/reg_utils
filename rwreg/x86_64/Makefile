@@ -68,4 +68,6 @@ clean: cleanrpm
 	-rm -rf $(PackageDir)
 
 cleandoc: 
-	-rm-rf doc/html  doc/latex  doc/xml
+	-rm -rf doc/html
+	-rm -rf doc/latex
+	-rm -rf doc/xml
