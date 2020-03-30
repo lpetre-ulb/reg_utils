@@ -257,10 +257,17 @@ class Prompt(ri_prompt.Prompt):
         if 'eagle' in hostname:
             print 'This function can only be run from a host PC'
         else:
-            print 'Function temporarily not supported'
-            # eagle=xi.Utils(self.cardname)
-            # eagle.update_atdb(args)
-            # print 'LMDB address table updated'
+            from ctypes import CDLL, c_bool, c_char_p
+
+            lib = CDLL("librwreg.so")
+            updateAddressTable = lib.updateAddressTable
+            updateAddressTable.restype = c_bool
+            updateAddressTable.argtypes=[c_char_p]
+
+            if (updateAddressTable(args)):
+                print 'An error occurred during the LMDB address table update'
+            else:
+                print 'LMDB address table successfully updated'
 
     def do_debug(self,args):
         """Quick read of SBit Clusters. USAGE: debug <OH_NUM>"""
