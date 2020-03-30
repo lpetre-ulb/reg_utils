@@ -1,5 +1,5 @@
-WISC_RPCSVC  := /opt/wiscrpcsvc
 BUILD_HOME   := $(shell dirname `cd ../../; pwd`)
+
 Project      := reg_utils
 Package      := rwreg
 ShortPackage := rwreg
@@ -17,18 +17,24 @@ RWREG_VER_PATCH:=$(shell $(BUILD_HOME)/$(Project)/config/tag2rel.sh | awk '{spli
 include $(BUILD_HOME)/$(Project)/config/mfCommonDefs.mk
 include $(BUILD_HOME)/$(Project)/config/mfRPMRules.mk
 
+XHAL_ROOT?=/opt/xhal
+WISCRPC_ROOT?=/opt/wiscrpcsvc
+
 CCFLAGS=-O0 -g3 -fno-inline -Wall -fPIC -pthread -m64
 
 LDFLAGS=-shared
 
-IncludeDirs= ${BUILD_HOME}/${Project}/${Package}/${Arch}/include
+IncludeDirs= $(XHAL_ROOT)/include
+IncludeDirs+=$(CTP7_ROOT)/include
 INC=$(IncludeDirs:%=-I%)
 
-Libraries= -lwiscrpcsvc
+Libraries=  -lxhal-client -lxhal-base
+Libraries+= -lwiscrpcsvc
 #assume wiscrpcsvc installed system-wide. Not sure how to fix in docker
 
-LIB = -L${WISC_RPCSVC}/lib
-LIB += $(Libraries)
+LIB=  -L$(XHAL_ROOT)/lib
+LIB+= -L${WISCRPC_ROOT}/lib
+LIB+= $(Libraries)
 
 SRCS_RPC_SA = $(shell echo src/*.cc)
 OBJS_RPC_SA = $(SRCS_RPC_SA:.cc=.o)
@@ -37,7 +43,7 @@ RPC_SA_LIB=${BUILD_HOME}/${Project}/${Package}/${Arch}/lib/librwreg.so
 
 .PHONY: clean rpc prerpm doc
 
-default:
+default: build
 	@echo "Running default target"
 	$(MakeDir) $(PackageDir)
 
