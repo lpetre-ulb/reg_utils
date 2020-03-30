@@ -1,6 +1,6 @@
 SUBPACKAGES := \
-        reg_interface \
-        reg_generator
+	reg_interface \
+	#reg_generator
 
 SUBPACKAGES.DEBUG    := $(patsubst %,%.debug,    ${SUBPACKAGES})
 SUBPACKAGES.DOC      := $(patsubst %,%.doc,      ${SUBPACKAGES})
@@ -8,6 +8,12 @@ SUBPACKAGES.RPM      := $(patsubst %,%.rpm,      ${SUBPACKAGES})
 SUBPACKAGES.CLEANRPM := $(patsubst %,%.cleanrpm, ${SUBPACKAGES})
 SUBPACKAGES.CLEANDOC := $(patsubst %,%.cleandoc,    ${SUBPACKAGES})
 SUBPACKAGES.CLEAN    := $(patsubst %,%.clean,    ${SUBPACKAGES})
+
+.PHONY: $(SUBPACKAGES)
+
+build: $(SUBPACKAGES)
+
+all: $(SUBPACKAGES) $(SUBPACKAGES.RPM) $(SUBPACKAGES.DOC)
 
 rpm: $(SUBPACKAGES) $(SUBPACKAGES.RPM)
 
