@@ -9,6 +9,7 @@
 #include <xhal/extern/wiscrpcsvc.h>
 #include <xhal/common/rpc/call.h>
 #include <ctp7_modules/common/expert_tools.h>
+#include <ctp7_modules/common/utils.h>
 
 #define DLLEXPORT extern "C"
 
@@ -64,6 +65,7 @@ DLLEXPORT uint32_t init(char * hostname)
 
     try {
         ASSERT(conn.load_module("expert_tools", "expert_tools v1.0.1"));
+        ASSERT(conn.load_module("utils", "utils v1.0.1"));
     }
     STANDARD_CATCH;
 
@@ -101,5 +103,20 @@ DLLEXPORT unsigned long putReg(unsigned int address, unsigned int value)
         return value;
     } catch (...) {
         return 0xdeaddead;
+    }
+}
+
+/*!
+ * \brief Update the LMDB address table on the back-end board
+ *
+ * \param path Path to the XML address table on the back-end board
+ */
+DLLEXPORT bool updateAddressTable(const char *path)
+{
+    try {
+        xhal::common::rpc::call<::utils::update_address_table>(conn, path);
+        return false;
+    } catch (...) {
+        return true;
     }
 }
