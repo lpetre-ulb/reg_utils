@@ -45,7 +45,7 @@ preprpm: default
 	@echo "Running preprpm target"
 	$(MakeDir) $(ScriptDir)
 	@cp -rf scripts/*  $(ScriptDir)
-	@cp -rf arm common $(PackageDir)
+	@cp -rf arm common gem $(PackageDir)
 	-cp -rf README.md LICENSE CHANGELOG.md MANIFEST.in requirements.txt $(PackageDir)
 	-cp -rf README.md LICENSE CHANGELOG.md MANIFEST.in requirements.txt pkg
 

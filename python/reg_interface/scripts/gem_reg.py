@@ -5,19 +5,13 @@ if __name__ == '__main__':
     from optparse import OptionParser
     parser = OptionParser()
     parser.add_option("-e", "--execute", type="str", dest="exe",
-                      help="Function to execute once", metavar="exe", default=None)
+                      help="Function to execute once, should be used as reg_interface -e <method> \"<method arguments>\" - note the quotes", metavar="exe", default=None)
     parser.add_option("-n", "--hostname", type="string", dest="hostname",
                       help="CTP7 hostname, default is the one used at p5", default="")
 
     (options, args) = parser.parse_args()
 
-    # A possible way of adding user extension module:
-    #try:
-    #   from gem_reg_interface_extras.ri_prompt_extended import *
-    #   print "Extended prompt module found"
-    #except ImportError:
-    #   print "Extended prompt module not found, importing basic one"
-    from reg_utils.reg_interface.common.ri_prompt import *
+    from reg_utils.reg_interface.gem.ri_prompt_extended import *
 
     if options.exe:
         parseXML()

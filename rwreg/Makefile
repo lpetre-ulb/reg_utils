@@ -9,6 +9,12 @@ SUBPACKAGES.CLEANRPM := $(patsubst %,%.cleanrpm, ${SUBPACKAGES})
 SUBPACKAGES.CLEANDOC := $(patsubst %,%.cleandoc,    ${SUBPACKAGES})
 SUBPACKAGES.CLEAN    := $(patsubst %,%.clean,    ${SUBPACKAGES})
 
+.PHONY: $(SUBPACKAGES)
+
+build: $(SUBPACKAGES)
+
+all: $(SUBPACKAGES) $(SUBPACKAGES.RPM) $(SUBPACKAGES.DOC)
+
 rpm: $(SUBPACKAGES) $(SUBPACKAGES.RPM)
 
 doc: $(SUBPACKAGES.DOC)

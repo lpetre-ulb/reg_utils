@@ -1,5 +1,6 @@
-ifndef PETA_STAGE
-$(error "Error: PETA_STAGE environment variable not set.  Change to the root of your PetaLinux install, and source the settings.sh file")
+PETA_STAGE ?= /opt/gem-peta-stage/ctp7
+ifeq "$(wildcard $(PETA_STAGE) )" ""
+$(error "Error: PETA_STAGE environment does not point to an existing direcotory. ($(PETA_STAGE) does not exist))
 endif
 
 BUILD_HOME   := $(shell dirname `cd ../../; pwd`)
